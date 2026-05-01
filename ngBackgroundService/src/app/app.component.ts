@@ -49,6 +49,7 @@ export class AppComponent {
   BuyMultiplier() {
     // TODO: Implémenter la méthode qui permet d'acheter un niveau de multiplier (Appel au Hub!)
     this.hubConnection?.invoke("BuyMultiplicateur");
+    this.multiplier++;
   }
 
   async register(){
@@ -92,11 +93,15 @@ export class AppComponent {
     this.hubConnection.on('GameInfo', (data:GameInfo) => {
       this.isConnected = true;
       // TODO: Mettre à jour les variables pour le coût du multiplier et le nbWins
+      this.nbWins = data.nbWins
+      this.multiplierInitalCost = data.multiplierCost
     });
 
     this.hubConnection.on('EndRound', (data:RoundResult) => {
       this.nbClicks = 0;
       // TODO: Reset du multiplierCost et le multiplier
+      this.multiplierCost = 10;
+      this.multiplier = 1;
 
       // TODO: Si le joueur a gagné, on augmene nbWins
 
